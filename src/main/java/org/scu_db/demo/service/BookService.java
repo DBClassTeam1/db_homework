@@ -9,4 +9,6 @@ public interface BookService {
     List<Book> findBookById(Integer Id);
     List<Book> findBookByIdUseSql(Integer Id);
 
+    List<Book> findBooksByBorrowermemnoIsNotNull();
+    Integer countBookByCallnumberIs(String callnumber);
 }
