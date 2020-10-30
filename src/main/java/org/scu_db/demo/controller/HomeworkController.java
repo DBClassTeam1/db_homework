@@ -1,5 +1,6 @@
 package org.scu_db.demo.controller;
 
+import org.scu_db.demo.Repository.BookRepository;
 import org.scu_db.demo.model.Book;
 import org.scu_db.demo.model.Member;
 import org.scu_db.demo.model.Title;
@@ -9,6 +10,7 @@ import org.scu_db.demo.service.TitleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +25,8 @@ public class HomeworkController {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private BookRepository bookRepository;
 
     @RequestMapping("/1")
     public List<Integer> homework1(){
@@ -32,10 +36,21 @@ public class HomeworkController {
 
         //------------在此之下写下执行代码--------------
 
+        /*bookId=new LinkedList<>();
+        for (Book book:bookService.findAllBooks()){
+            if(book.getBorrowermemno() != null){
+                bookId.add(book.getBookId());
+            }
+        }*/
 
+        bookId=new LinkedList<>();
+
+        for (Book book:bookService.findBooksByBorrowermemnoIsNotNull()){
+            bookId.add(book.getBookId());
+        }
 
         //-----------在此之上写下执行代码---------------
-        return null;//TODO:修改返回值为bookId
+        return bookId;//TODO:修改返回值为bookId
     }
 
     @RequestMapping("/2")
@@ -46,10 +61,10 @@ public class HomeworkController {
 
         //------------在此之下写下执行代码--------------
 
-
+        titles=titleService.findTitlesByNameIsIn(List.of("Iliad","Odyssey"));
 
         //-----------在此之上写下执行代码---------------
-        return null;//TODO:修改返回值为titles
+        return titles;//TODO:修改返回值为titles
     }
 
 
@@ -61,10 +76,10 @@ public class HomeworkController {
 
         //------------在此之下写下执行代码--------------
 
-
+        count=bookService.countBookByCallnumberIs("Call123");
 
         //-----------在此之上写下执行代码---------------
-        return null;//TODO:修改返回值为books
+        return count;//TODO:修改返回值为books
     }
 
     @RequestMapping("/4")
@@ -74,9 +89,10 @@ public class HomeworkController {
         List<String> callnumbers;
         //------------在此之下写下执行代码--------------
 
+        callnumbers=bookRepository.findBooksBySQL();
 
         //-----------在此之上写下执行代码---------------
-        return null;//TODO:修改返回值为books
+        return callnumbers;//TODO:修改返回值为books
     }
 
 

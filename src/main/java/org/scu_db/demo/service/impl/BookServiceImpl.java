@@ -29,4 +29,12 @@ public class BookServiceImpl implements BookService {
     public List<Book> findBookByIdUseSql(Integer bookId) {
         return bookRepository.findBookByIdUseSql(bookId);
     }
+
+    @Override
+    public List<Book> findBooksByBorrowermemnoIsNotNull() { return bookRepository.findBooksByBorrowermemnoIsNotNull(); }
+
+    @Override
+    public Integer countBookByCallnumberIs(String callnumber) {
+        return bookRepository.countBookByCallnumberIs(callnumber);
+    }
 }
